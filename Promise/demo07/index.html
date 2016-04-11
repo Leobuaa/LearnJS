@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>done(); finally()</title>
+</head>
+<body>
+<script>
+    // We need a done() method to deal with any possible error
+    Promise.prototype.done = function (onFullfilled, onRejected) {
+        this.then(onFullfilled, onRejected)
+                .catch(function (reason) {
+                    setTimeout(function () {
+                        throw reason;
+                    }, 0);
+                });
+    };
+
+    var p = new Promise(function (resolve, reject) {
+        resolve(2);
+    });
+
+    // then will throw a new error, and done will catch it
+    p.then(function (result) {
+        console.log(result);
+        return new Promise(function (resolve, reject) {
+           resolve(x + 3);
+        });
+    }).done();
+
+    // finally(), no matter the promise is resolved or rejected, it will run.
+    Promise.prototype.finally = function (callback) {
+        let p = this.constructor;
+        return this.then(
+                function (value) {
+                    p.resolve(callback()).then(function () {
+                        console.log(value);
+                    })
+                }, function (error) {
+                    p.resolve(callback()).then(function () {
+                        throw error;
+                    })
+                }
+        );
+    };
+
+    var pFin1 = new Promise(function (resolve, reject) {
+        resolve(66666);
+    });
+
+    pFin1.finally(function () {
+        console.log('Finally I will print!');
+    }).done();
+
+    var pFin2 = new Promise(function (resolve, reject) {
+        resolve(x + 2);
+    });
+
+    pFin2.finally(function () {
+        console.log('Finaaly I will print out too!');
+    }).done();
+</script>
+</body>
+</html>

@@ -2,9 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Promise.all()</title>
+    <title>Promise.all(); Promise.race(); Promise.resolve(); Promise.reject();</title>
 </head>
 <body>
-    
+    <script>
+        function getJSON(url) {
+            var promise = new Promise( function (resolve, reject) {
+                        var client = new XMLHttpRequest();
+                        client.open('GET', url);
+                        client.onreadystatechange = handler;
+                        client.responseType = 'json';
+                        client.setRequestHeader("Accept", 'application/json');
+                        client.send();
+
+                        function handler() {
+                            if (this.readyState !== 4) {
+                                return;
+                            }
+
+                            if (this.status === 200) {
+                                resolve(this.response);
+                            } else {
+                                reject(new Error(this.statusText));
+                            }
+                        };
+                    }
+            );
+
+            return promise;
+        }
+
+        // Promise.all()
+        var ids = [1, 2, 3];
+        var promises = ids.map(function (id) {
+            return getJSON('post' + id + '.json');
+        });
+
+        Promise.all(promises).then(function (json) {
+            console.log(json);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        // Promise.race()
+        var racePromise = Promise.race(promises);
+        racePromise.then(function (json) {
+            console.log(json);
+        });
+
+        racePromise.catch(function (error) {
+            console.log(error);
+        })
+
+        // Sometime we need to cast a object into Promise, we can use Promise.resolve()
+        // There are 4 cases.
+
+        // Case 1: The argument is a Promise object, so just nothing happen
+
+        // Case 2: The argument is thenable, means it has then() method
+        // When cast it into a Promise object, it will run then() method at once
+        let thenable = {
+            then: function (resolve, reject) {
+                resolve(6666);
+            }
+        };
+        
+        let p1 = Promise.resolve(thenable);
+        p1.then(function (value) {
+            console.log(value); // 66666
+        });
+        p1.catch(function (error) {
+            console.log(error);
+        })
+
+        // Case 3: The argument is not thenable or even a object
+        // Case 4: Without any argument
+        // It will return a Resolved Promise object
+        var p2 = Promise.resolve('Hello');
+
+        p2.then(function (s) {
+            console.log(s);
+        });
+
+        var p3 = Promise.resolve();
+
+        p3.then(function () {
+            console.log('A Promise object without argument');
+        })
+
+        // Promise.reject() is the same as resolve()
+
+    </script>
 </body>
 </html>

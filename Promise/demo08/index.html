@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Load Image</title>
+</head>
+<body>
+<script>
+    var loadImage = function (path) {
+        return new Promise(function (resolve, reject) {
+            var image = new Image();
+            image.onload = resolve(image);
+            image.onerror = reject;
+            image.src = path;
+        });
+    }
+
+    loadImage('test.jpg').then(function (image) {
+        console.log('Load Image Succeed!');
+        document.body.appendChild(image);
+    }, function () {
+        console.log('Load Image Failed!');
+    });
+
+
+</script>
+</body>
+</html>
