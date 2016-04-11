@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn Promise</title>
+</head>
+<body>
+    <script>
+        function timeout(ms) {
+            return new Promise(function (resolve, reject){
+                        setTimeout(reject, ms, 'failed');
+                    });
+        }
+
+        timeout(3000).then(function (value) {
+            console.log(value);
+        }, function (value) {
+            console.log(value);
+        })
+    </script>
+</body>
+</html>
