@@ -7,7 +7,7 @@
 <body>
     <script>
         function getJSON(url) {
-            var promise = new Promise( function (resolve, reject) {
+            return new Promise(function (resolve, reject) {
                         var client = new XMLHttpRequest();
                         client.open('GET', url);
                         client.onreadystatechange = handler;
@@ -25,11 +25,9 @@
                             } else {
                                 reject(new Error(this.statusText));
                             }
-                        };
+                        }
                     }
             );
-
-            return promise;
         }
 
         getJSON('post.json').then(function (json) {
@@ -46,7 +44,9 @@
         ).then(
                 comment => console.log(comment),
                 error => console.log(error)
-        );
+        )
+
+        setTimeout(() => alert('Hello World!'), 2000);
     </script>
 </body>
 </html>
