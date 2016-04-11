@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise.propotype.catch()</title>
+</head>
+<body>
+    <script>
+        function getJSON(url) {
+            var promise = new Promise( function (resolve, reject) {
+                        var client = new XMLHttpRequest();
+                        client.open('GET', url);
+                        client.onreadystatechange = handler;
+                        client.responseType = 'json';
+                        client.setRequestHeader("Accept", 'application/json');
+                        client.send();
+
+                        function handler() {
+                            if (this.readyState !== 4) {
+                                return;
+                            }
+
+                            if (this.status === 200) {
+                                resolve(this.response);
+                            } else {
+                                reject(new Error(this.statusText));
+                            }
+                        };
+                    }
+            );
+
+            return promise;
+        }
+
+        getJSON('post.json').then(function (json) {
+            return getJSON(json.commentUrl);
+        }).then(function (comment) {
+            console.log(comment);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        // This one is the same as the above one
+        getJSON('post.json').then(function (json) {
+            return getJSON(json.commentUrl);
+        }).then(function (comment) {
+            console.log(comment);
+        }).then(null, function (error) {
+            console.log(error);
+        });
+
+        // It is no use to reject after invoke resolve, the error message can not be caught
+        var p = new Promise(function (resolve, reject) {
+            resolve('Succeed');
+            reject(new Error('error'));
+        });
+
+        p.then(function (message) {
+            console.log(message);
+        }).catch(function (error) {
+            console.log(error);
+        })
+
+
+        var someAsyncThing = new Promise(function (resolve, reject) {
+            // error, x undefined
+            resolve(x + 2);
+        });
+
+        // catch() will return a Promise Object
+        someAsyncThing.catch(function (error) {
+            console.log('Oh no ' + error);
+        }).then(function () {
+            console.log('Carry on');
+        });
+
+        // There is no error, so it will skip the catch()
+        Promise.resolve()
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    console.log('Carry on');
+                });
+    </script>
+</body>
+</html>

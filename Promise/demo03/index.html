@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise another promise</title>
+</head>
+<body>
+    <script>
+        // Warning: The setTimeout function is easy to misuse.
+        // Use like setTimeout(alert('Hello'), 3000) is a wrong, it will delay 3 second to alert, and it would alert at once.
+        // We should use it like this:
+        // setTimeout(function() { alert('Hello');}, 3000)
+
+        var p1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                reject(new Error('fail'));
+                }, 3000
+            );
+        });
+
+        var p2 = new Promise(function(resolve, reject) {
+            setTimeout(function () {
+                resolve(p1);
+            }, 1000);
+        });
+        
+        p2.then(function (result) {
+            console.log(result);
+        });
+        p2.catch(function (error) {
+            console.log(error);
+        });
+
+
+        var p3 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('Succeed');
+            }, 3000);
+        });
+
+        var p4 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve(p3);
+            }, 1000);
+        });
+
+        p4.then(function (result) {
+            console.log(result);
+        });
+        p4.catch(function (error) {
+            console.log(error);
+        })
+
+    </script>
+</body>
+</html>

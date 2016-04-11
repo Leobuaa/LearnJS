@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise.propotype.then()</title>
+</head>
+<body>
+    <script>
+        function getJSON(url) {
+            var promise = new Promise( function (resolve, reject) {
+                        var client = new XMLHttpRequest();
+                        client.open('GET', url);
+                        client.onreadystatechange = handler;
+                        client.responseType = 'json';
+                        client.setRequestHeader("Accept", 'application/json');
+                        client.send();
+
+                        function handler() {
+                            if (this.readyState !== 4) {
+                                return;
+                            }
+
+                            if (this.status === 200) {
+                                resolve(this.response);
+                            } else {
+                                reject(new Error(this.statusText));
+                            }
+                        };
+                    }
+            );
+
+            return promise;
+        }
+
+        getJSON('post.json').then(function (json) {
+            return getJSON(json.commentUrl);
+        }).then(function (comment) {
+            console.log(comment);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        // a clear code use arrow function
+        getJSON('post.json').then(
+                json => getJSON(json.commentUrl)
+        ).then(
+                comment => console.log(comment),
+                error => console.log(error)
+        );
+    </script>
+</body>
+</html>
