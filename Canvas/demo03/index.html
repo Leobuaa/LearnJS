@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas and Touch Event</title>
+    <script>
+        function startup() {
+            var canvas = document.getElementById('can');
+            canvas.addEventListener("touchstart", handleStart, false);
+            canvas.addEventListener("touchend", handleEnd, false);
+            canvas.addEventListener("touchcancel", handleCancel, false);
+            canvas.addEventListener("touchleave", handleEnd,false);
+            canvas.addEventListener("touchmove", handleMove, false);
+            
+        }
+        
+        function handleStart(evt) {
+            evt.preventDefault();
+            var x = evt.touches[0].pageX;
+            var y = evt.touches[0].pageY;
+            var el = document.getElementById('can');
+            var ctx = el.getContext("2d");
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.arc(x, y, 10, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
+        
+        function handleEnd(evt) {
+        }
+        
+        function handleCancel() {
+            
+        }
+        
+        function handleMove() {
+            
+        }
+    </script>
+
+    <style>
+        #can {
+            margin: 0;
+            padding: 0;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="can" width="600" height="600">
+        Your browser does not support canvas element.
+    </canvas>
+    <br>
+    <button onclick="startup()">Initialize</button>
+</body>
+</html>

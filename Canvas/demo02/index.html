@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+    <script>
+        function draw() {
+            var canvas1 = document.getElementById('can1');
+            if (canvas1.getContext) {
+                let ctx = canvas1.getContext('2d');
+
+                ctx.beginPath();
+                ctx.moveTo(75, 100);
+                ctx.lineTo(150, 150);
+                ctx.lineTo(150, 50);
+                ctx.fill();
+            }
+
+            var canvas2 = document.getElementById('can2');
+            if (canvas2.getContext) {
+                let ctx = canvas2.getContext('2d');
+
+                ctx.beginPath();
+                ctx.arc(100, 100, 50, 0, Math.PI * 2, true);
+                ctx.moveTo(130, 100);
+                ctx.arc(100, 100, 30, 0, Math.PI, false);
+                ctx.moveTo(90, 85);
+                ctx.arc(85, 85, 5, 0, Math.PI * 2, true);
+                ctx.moveTo(125, 85);
+                ctx.arc(120, 85, 5, 0, Math.PI * 2, true);
+                ctx.stroke();
+            }
+        }
+    </script>
+    <style>
+        #can1 {
+            border: 1px solid black;
+        }
+
+        #can2 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload="draw();">
+    <h1>Canvas </h1>
+    <canvas id="can1" width="200" height="200">
+
+    </canvas>
+
+    <canvas id="can2" width="200" height="200">
+
+    </canvas>
+</body>
+</html>
