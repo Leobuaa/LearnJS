@@ -5,6 +5,10 @@
     <title>Animate</title>
     <script src="../../jquery-2.2.3.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         button {
             height: 50px;
             background-color: greenyellow;
@@ -19,7 +23,22 @@
             padding: 20px;
             color: black;
             font-style: italic;
+            position: relative;
+        }
+
+        div {
+            background-color: aqua;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            position: relative;
+        }
+
+        div p {
             position: absolute;
+            top: 20px;
+            font-style: italic;
+            font-size: 1.2em;
         }
     </style>
 </head>
@@ -29,14 +48,70 @@
     Click to Move 'Hello world!' right 250px.
 </button>
 
+<button id="moveBack">
+    Move it back.
+</button>
+
 <p>
     Hello World!
 </p>
+
+<button id="changeStyle">
+    Change the div style.
+</button>
+
+<button id="resetStyle">
+    Reset the div style.
+</button>
+
+<button id="toggle">
+    Toggle the div box.
+</button>
+
+<button id="stop">
+    Stop the animation.
+</button>
+
+<div>
+    <p>Hello from Leo.</p>
+</div>
 
 <script>
     $(document).ready(function () {
         $("#move").click(function () {
             $("p").animate({left: '250px'});
+        });
+
+        $("#moveBack").click(function () {
+            $("p").animate({left: '0px'});
+        });
+
+        $("#changeStyle").click(function () {
+            $("div").animate({
+                width: '400px',
+                height: '400px',
+                left: '200px',
+                opacity: '0.5'
+            }, 1000);
+        });
+
+        $("#resetStyle").click(function () {
+            $("div").animate({
+                width: '-=200px',
+                height: '-=200px',
+                left: '-=200px',
+                opacity: '1.0'
+            }, 1000);
+        });
+
+        $("#toggle").click(function () {
+            $("div").animate({
+                height: 'toggle'
+            }, 3000);
+        });
+
+        $("#stop").click(function () {
+            $("div").stop(false, true);
         });
     });
 </script>
