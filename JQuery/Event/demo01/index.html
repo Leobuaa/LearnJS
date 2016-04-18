@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Commonly Used JQuery Event Methods</title>
+    <script src="../../jquery-2.2.3.js"></script>
+    <style>
+        input {
+            margin-top: 5px;
+        }
+
+        div {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #div1 {
+            background-color: aqua;
+            height: 50px;
+        }
+
+        #div2 {
+            background-color: antiquewhite;
+            height: 50px;
+        }
+
+        .moveP {
+            margin: 10px;
+            padding: 10px;
+            height: 50px;
+            background-color: greenyellow;
+            color: black;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<p id="p1">
+    Click me! I will disappear.
+</p>
+<p id="p2">
+    Double click me! I will disappear.
+</p>
+<p id="p3">
+    Mouse Enter I will alert.
+</p>
+<p id="p4">
+    Hover me, I will change background color.
+</p>
+Username: <input type="text"><br>
+Password: <input type="password"><br>
+
+<div id="div1">
+    <p>Hello world!</p>
+</div>
+
+<div id="div2">
+
+</div>
+
+<button id="moveP1" class="moveP">
+    Move the P from div1 to div2.
+</button>
+
+<button id="moveP2" class="moveP">
+    Move the P from div2 to div1.
+</button>
+
+<script>
+    $(document).ready(function () {
+        $("#p1").click(function () {
+           $(this).hide();
+        });
+
+        $("#p2").dblclick(function () {
+            $(this).hide();
+        });
+
+        $("#p3").on({
+            mouseenter: function() {
+                $(this).append("<span>You enter the area!</span>");
+            },
+
+            mouseleave: function() {
+                $("span").remove("#p3 >");
+            }
+        });
+
+        $("#p4").hover(function () {
+            $(this).css("background-color", "green");
+        }, function () {
+            $(this).css("background-color", "white");
+        });
+
+        $("input").on({
+            focus: function() {
+                $(this).css("background-color", "#cccccc");
+            },
+            blur: function () {
+                $(this).css("background-color", "#ffffff");
+            }
+        });
+
+        $("#moveP1").click(function() {
+            $("#div1 > p").appendTo("#div2");
+        });
+
+        $("#moveP2").click(function () {
+            $("#div2 > p").appendTo("#div1");
+        });
+    });
+
+</script>
+</body>
+</html>
