@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hide Show</title>
+    <title>Fade</title>
     <script src="../../jquery-2.2.3.js"></script>
     <style>
         button {
-            width: 100px;
             height: 50px;
             background-color: greenyellow;
             color: black;
@@ -20,38 +19,48 @@
             padding: 20px;
             color: black;
             font-style: italic;
+            display: none;
         }
     </style>
 </head>
 <body>
-<p>
+<p id="p1">
     Hello World!
 </p>
-<button id="hide">
-    Hide
+<button id="in">
+    FadeIn
 </button>
 
-<button id="show">
-    Show
+<button id="out">
+    FadeOut
 </button>
 
 <button id="toggle">
-    Toggle
+    FadeToggle
+</button>
+
+<button id="to">
+    FadeTo
 </button>
 
 <script>
     $(document).ready(function () {
-        $("#hide").click(function () {
-           $("p").hide(1000);
+        $("#in").click(function () {
+           $("p").fadeIn(1000);
         });
 
-        $("#show").click(function () {
-            $("p").show(1000);
+        $("#out").click(function () {
+            $("p").fadeOut(1000);
         });
 
         $("#toggle").click(function () {
-            $("p").toggle(1000);
-        })
+            $("p").fadeToggle(1000);
+        });
+
+        $("#to").click(function () {
+            $("p").fadeTo(1000, 0.3);
+        });
+
     });
 </script>
 </body>

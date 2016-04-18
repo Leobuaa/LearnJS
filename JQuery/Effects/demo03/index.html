@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hide Show</title>
+    <title>Slide</title>
     <script src="../../jquery-2.2.3.js"></script>
     <style>
         button {
-            width: 100px;
             height: 50px;
             background-color: greenyellow;
             color: black;
@@ -20,38 +19,41 @@
             padding: 20px;
             color: black;
             font-style: italic;
+            display: none;
         }
     </style>
 </head>
 <body>
+
 <p>
     Hello World!
 </p>
-<button id="hide">
-    Hide
+
+<button id="slideDown">
+    Click to Slide Down 'Hello world!'.
 </button>
 
-<button id="show">
-    Show
+<button id="slideUp">
+    Click to Slide Up 'Hello world!'.
 </button>
 
-<button id="toggle">
-    Toggle
+<button id="slideToggle">
+    Click to Toggle 'Hello world!'.
 </button>
 
 <script>
     $(document).ready(function () {
-        $("#hide").click(function () {
-           $("p").hide(1000);
+        $("#slideDown").click(function () {
+            $("p").slideDown(1000);
         });
 
-        $("#show").click(function () {
-            $("p").show(1000);
+        $("#slideUp").click(function () {
+            $("p").slideUp(1000);
         });
 
-        $("#toggle").click(function () {
-            $("p").toggle(1000);
-        })
+        $("#slideToggle").click(function () {
+            $("p").slideToggle(1000);
+        });
     });
 </script>
 </body>
