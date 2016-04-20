@@ -5,6 +5,42 @@
     <title>Cookie</title>
 </head>
 <body>
+<script>
+    function setCookie(cName, cValue, exDays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 1000 * exDays));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cName + "=" + cValue + ";"+ expires;
+    }
 
+    function getCookie(cName) {
+        var name = cName + "=";
+        var cookieString = document.cookie.split(";");
+        for (var i = 0; i < cookieString.length; i++) {
+            while(cookieString[i][0] === ' ') {
+                cookieString[i] = cookieString[i].substr(1);
+            }
+            if (cookieString[i].substr(0, name.length) === name) {
+                return cookieString[i].substr(name.length);
+            }
+        }
+        return "";
+    }
+
+    function readCookie() {
+        console.log(document.cookie);
+    }
+
+    function deleteCookie(cName) {
+        document.cookie = cName + "=;" + " expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    }
+
+    setCookie("name", "Leo", 3);
+    setCookie("id", "1111", 3);
+    setCookie("bd", "2016-01-01", 3);
+    console.log(getCookie("name"));
+    console.log(getCookie("id"));
+    console.log(getCookie("bd"));
+</script>
 </body>
 </html>
